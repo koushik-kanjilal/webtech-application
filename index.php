@@ -121,7 +121,11 @@ if(isset($_POST['post'])){
           </div>
           <div class="form-group">
             <label for="grp_members">Members:</label>
-            <input type="text" onkeyup="getSearchGrpUsers(this.value, '<?php echo $userLoggedIn; ?>')" class="form-control" id="grp_members" name="grp_members">
+            <input type="text" onkeyup="getSearchGrpUsers(this.value, '<?php echo $userLoggedIn; ?>')" class="form-control" id="select_grp_members" name="select_grp_members">
+            <input type="hidden" name="grp_members" id="grp_members" value="">
+          </div>
+          <div class="form-group">            
+            <label id="selectedMemebrs" style="display: none;"></label>
           </div>
 
           <div class="search_results_grp_members">
@@ -212,6 +216,8 @@ if(isset($_POST['post'])){
 
       });
   }
+
+  
  
    </script>
  </div>

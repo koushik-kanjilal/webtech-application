@@ -7,6 +7,7 @@ if(isset($_POST['create_group']))
 {
 	$group_name = $_POST['grp_name'];
 	$group_info = $_POST['grp_info'];
+	$group_members = $_POST['grp_members'];
 	
 	$uploadOk = 1;
 	$imageName = $_FILES['grp_image']['name'];
@@ -42,10 +43,20 @@ if(isset($_POST['create_group']))
 	}
 
 	$username = $_SESSION['username'];
-	$date = date('Y-m-d');
+	$date = date('Y-m-d H:i:s');
 
-	$myquery = mysqli_query($con, "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', 'date')");
-	//echo $myquery;die;
+	$myGrpQuery = mysqli_query($con, "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', 'date')");
+	//echo $myGrpQuery;die;
+
+	$last_added_group_id = mysqli_insert_id($con);
+
+	$membersArray = explode(",",$group_members);
+	if(!empty($membersArray)) {
+		foreach($membersArray as $members) {
+			$myGrpMembersQuery = mysqli_query($con, "INSERT INTO group_members VALUES (NULL, '$last_added_group_id', '$members', 'date')");
+		}
+	}
+
 	header("Location: ../../index.php");
 }
 

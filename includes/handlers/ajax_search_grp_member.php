@@ -35,7 +35,7 @@ if($query != ""){
 					</div>
 
 					<div class='liveSearchText'>
-					<input type='checkbox' name='selectGrpMem' id='selectGrpMem' />
+					<input type='checkbox' name='selectGrpMem' class='selectGrpMem' value='" . $row['username'] ."' />
 						" . $row['first_name'] . " " . $row['last_name'] . "
 						<p>" . $row['username'] ."</p>
 						<p id='grey'>" . $mutual_friends ."</p>
@@ -48,3 +48,20 @@ if($query != ""){
 }
 
 ?>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	var arr = [];
+    $('.selectGrpMem').change(function() {
+        if($(this).is(":checked")) {
+           arr.push($(this).val());
+        } else {
+        	arr.pop($(this).val());
+        }
+        $("#grp_members").val(arr);
+        var append_html = "You selected : "+arr;
+        $("#selectedMemebrs").html(append_html).fadeIn('slow');
+    });
+    console.log(arr);
+  });
+</script>
