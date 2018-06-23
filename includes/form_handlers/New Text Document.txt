@@ -1,0 +1,32 @@
+if(in_array("<span style='color: #ff9933;'> You're all set!! Go ahead and Login </span>", $error_array))
+  {
+  	$base_url= "http://www.digitallearner.online/";
+  	$mail_body = " <h2> Hi, thnak you for Registering in Digital Learner </h2> <br> <p> your Username is " . $username . " and your Password is " . $pw2 . " This account will be active only after your Email verification. </p>
+  	<p> Please open this link to verify your Email address : " . $base_url . "email_verification.php?activation_code=" . $actcode . " </p> <br> Best Regards, <br>  WebTechs  ";
+  
+
+  require '../../classes/class.phpmailer.php';
+    
+    $mail = new PHPMailer;
+    $mail->IsSMTP();
+    $mail->Host = 'smtpout.asia.secureserver.net';
+    $mail->Port = '80';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'webtech@digitallearner.online';
+    $mail->Password = 'AbhiJiji@894';
+    $mail->SMTPSecure = '';
+    $mail->From ='webtech@digitallearner.online';
+    $mail->FromName = "WebTechs";
+    $mail->AddAddress($em1, $username);
+    $mail->WordWrap =50;
+    $mail->IsHTML(true);
+    $mail->Subject = ' Verify your Email for Digital Learner';
+    $mail->Body = $mail_body;
+
+  if($mail->Sent())
+  {
+  	echo "email sent";
+  }
+
+
+  }
