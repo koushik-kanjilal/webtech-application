@@ -62,6 +62,5 @@ if($query != ""){
         var append_html = "You selected : "+arr;
         $("#selectedMemebrs").html(append_html).fadeIn('slow');
     });
-    console.log(arr);
   });
 </script>
