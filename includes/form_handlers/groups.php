@@ -50,6 +50,12 @@ if(isset($_POST['create_group']))
 
 	$last_added_group_id = mysqli_insert_id($con);
 
+	if($group_members == '') {
+		$group_members = $username;
+	} else {
+		$group_members = $group_members.','.$username;
+	}
+
 	$membersArray = explode(",",$group_members);
 	if(!empty($membersArray)) {
 		foreach($membersArray as $members) {
