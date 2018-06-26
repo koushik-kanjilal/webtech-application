@@ -5,6 +5,7 @@ include("../../config/config_regteach.php");
 
 if(isset($_POST['create_group']))
 {
+
 	$group_name = $_POST['grp_name'];
 	$group_info = $_POST['grp_info'];
 	$group_members = $_POST['grp_members'];
@@ -44,8 +45,9 @@ if(isset($_POST['create_group']))
 
 	$username = $_SESSION['username'];
 	$date = date('Y-m-d H:i:s');
+	//echo "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', '$date')";die;
 
-	$myGrpQuery = mysqli_query($con, "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', 'date')");
+	$myGrpQuery = mysqli_query($con, "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', '$date')");
 	//echo $myGrpQuery;die;
 
 	$last_added_group_id = mysqli_insert_id($con);
@@ -59,7 +61,7 @@ if(isset($_POST['create_group']))
 	$membersArray = explode(",",$group_members);
 	if(!empty($membersArray)) {
 		foreach($membersArray as $members) {
-			$myGrpMembersQuery = mysqli_query($con, "INSERT INTO group_members VALUES (NULL, '$last_added_group_id', '$members', 'date')");
+			$myGrpMembersQuery = mysqli_query($con, "INSERT INTO group_members VALUES (NULL, '$last_added_group_id', '$members', '$date')");
 		}
 	}
 

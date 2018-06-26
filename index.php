@@ -1,17 +1,11 @@
 <?php 
 include("includes/header.php");
-require 'includes/form_handlers/groups.php';
+//require 'includes/form_handlers/groups.php';
 
 /*if (isset($_SESSION['username'])) {
   $userLoggedIn = $_SESSION['username'];
 }*/
-$query = "SELECT * FROM group_members WHERE user_name = '$userLoggedIn'";
-$sql = mysqli_query($con, $query);
-if(mysqli_num_rows($sql)!=0) {
-    while($userGroups = mysqli_fetch_array($sql,MYSQLI_ASSOC)) {
-        //print_r($userGroups);die;
-    }
-}
+
 /*$userGroups = mysqli_fetch_array($sql,MYSQLI_ASSOC);
 print_r($userGroups);die;*/
 
@@ -83,13 +77,22 @@ if(isset($_POST['post'])){
              
               <a href="javascript:void(0)" data-toggle="modal" data-target="#createGroup">Create Group</a>
 
+              <?php $query = "SELECT `groups`.`id`, `groups`.`grp_name` FROM `group_members` JOIN `groups` ON `group_members`.`group_id`=`groups`.`id` WHERE `group_members`.`user_name` = '$userLoggedIn'";
+              $sql = mysqli_query($con, $query); ?>
+
               <div class="dropdown show">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="yourGroupNames" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Your Groups
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="yourGroupNames">
-                  <a class="dropdown-item" href="#">Action</a>
+                  <?php 
+                  if(mysqli_num_rows($sql)!=0) {
+                      foreach (mysqli_fetch_all($sql, MYSQLI_ASSOC) as $key => $value) { ?>
+                        <a class="dropdown-item" href="group_detail.php?id=<?php echo base64_encode($value['id']) ?>"><?php echo $value['grp_name'] ?></a><br>
+                      <?php }
+                  } ?>
+                  
                 </div>
               </div>
              

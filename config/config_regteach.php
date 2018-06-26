@@ -9,7 +9,7 @@ if(!isset($_SESSION))
     session_start(); 
 }
 
-$con = mysqli_connect("localhost","root","","digilearner"); //connection variable
+$con = mysqli_connect("localhost","root","root","digilearner"); //connection variable
 
 if(mysqli_connect_errno())
   {
