@@ -3,7 +3,7 @@ error_reporting(0);
 //require $_SERVER['DOCUMENT_ROOT'].'/Digital_learner/config/config_regteach.php';
 include("../../config/config_regteach.php");
 
-if(isset($_POST['create_group']))
+if(isset($_POST['edit_group']))
 {
 
 	$group_name = $_POST['grp_name'];
@@ -11,10 +11,10 @@ if(isset($_POST['create_group']))
 	$group_members = implode(",", $_POST['grp_members']);
 	//echo implode(",", $_POST['grp_members']);die;
 	
-	$uploadOk = 1;
-	$imageName = $_FILES['grp_image']['name'];
 	
-	if($imageName != "") {
+	if($_FILES['grp_image']['name'] != "") {
+		$uploadOk = 1;
+		$imageName = $_FILES['grp_image']['name'];
 
 		$uniqueId = uniqid();
 		$group_image_name = "assets/images/group_cover_photos/". $uniqueId . basename($imageName);
@@ -46,18 +46,24 @@ if(isset($_POST['create_group']))
 
 	$username = $_SESSION['username'];
 	$date = date('Y-m-d H:i:s');
-	//echo "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', '$date')";die;
+	$update_qry = "UPDATE `groups` SET `grp_name`='".$group_name."', `grp_info`='".$group_info."'";
+	if($imageName!=""){
+		$update_qry.=", `picture`='".$imageName."'";
+	}
+	$update_qry.=" WHERE `id`=".base64_decode($_GET['id']);
+	//echo $update_qry;die;
 
-	$myGrpQuery = mysqli_query($con, "INSERT INTO groups VALUES (NULL, '$group_name', '$group_info', '$group_image_name', '$username', '1', '$date')");
+	$myGrpQuery = mysqli_query($con, $update_qrys);
 	//echo $myGrpQuery;die;
 
-	$last_added_group_id = mysqli_insert_id($con);
-
+	$last_added_group_id = base64_decode($_GET['id']);
+	mysqli_query($con, "DELETE FROM `group_members` WHERE `group_id`=".base64_decode($_GET['id']));
 	if($group_members == '') {
 		$group_members = $username;
 	} else {
 		$group_members = $group_members.','.$username;
 	}
+	//echo $group_members;die;
 
 	$membersArray = explode(",",$group_members);
 	if(!empty($membersArray)) {

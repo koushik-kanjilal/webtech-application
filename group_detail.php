@@ -101,7 +101,7 @@ if(isset($_POST['post'])){
 					<h4>
 						<?php echo $result['grp_name'] ?>
 						<?php if($userLoggedIn==$result['created_by']){ ?>
-							<a href=""><i class="fa fa-edit"></i></a>
+							<a href="javascript:void(0)" class="grp_edit" data-val="<?php echo base64_decode($_GET['id']) ?>"><i class="fa fa-edit"></i></a>
 						<?php } ?>
 						</h4>
 					<p><?php echo $result['grp_info'] ?></p>
@@ -124,6 +124,57 @@ if(isset($_POST['post'])){
 				</div>
 			</div>
 		</div>
+
+<?php $grp_membr_qry = mysqli_query($con, "SELECT `user_name` FROM `group_members` WHERE `group_id`=".base64_decode($_GET['id'])." AND `user_name` <> '".$userLoggedIn."'");
+
+$grpMembrs=array_column(mysqli_fetch_all($grp_membr_qry,MYSQLI_ASSOC), "user_name");
+//echo "<pre>"; print_r($grpMembrs);die; ?>
+<div class="modal fade" id="editGroup" tabindex="-1" role="dialog" aria-labelledby="postGroupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="postGroupModalLabel">Create New Group</h4>
+      </div>
+
+      <div class="modal-body">
+        <form class="profile_post" action="includes/form_handlers/edit_groups.php?id=<?php echo $_GET['id'] ?>" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="grp_name">Group Name</label>
+            <input type="text" class="form-control" id="grp_name" name="grp_name" value="<?php echo $result['grp_name'] ?>" required="required">
+          </div>
+           <div class="form-group">
+            <label for="grp_info">Group Info</label>
+            <input type="text" class="form-control" id="grp_info" value="<?php echo $result['grp_info'] ?>" name="grp_info" required="required">
+          </div>
+          <div class="form-group">
+            <label for="grp_image">Image:</label>
+            <input type="file" id="grp_image" name="grp_image">
+          </div>
+          <div class="form-group">
+            <label for="grp_members">Members:</label>
+            <!-- <input type="text" onkeyup="getSearchGrpUsers(this.value, '<?php echo $userLoggedIn; ?>')" class="form-control" id="select_grp_members" name="select_grp_members">
+            <input type="hidden" name="grp_members" id="grp_members" value=""> -->
+            <select class="select2" width="100%" multiple="" name="grp_members[]" style="width: 100%">
+              <option>Select</option>
+              <?php foreach ($usersReturnedQuery as $key => $value) { ?>
+                <option value="<?php echo $value['username']; ?>" <?php echo (in_array($value['username'], $grpMembrs)?"selected":"") ?>><?php echo $value['first_name']." ".$value['last_name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+
+          <button type="submit" name="edit_group" id="create_group" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 		<script>
    $(function(){
@@ -189,5 +240,25 @@ if(isset($_POST['post'])){
        }
    });
 
+
+  function getSearchGrpUsers(value, user) {
+
+      $.post("includes/handlers/ajax_search_grp_member.php", {query:value, userLoggedIn: user}, function(data) {
+
+        $('.search_results_grp_members').html(data);
+
+      });
+  }
+
+  $('.select2').select2({
+    placeholder: "Select Members",
+    allowClear: true,
+    closeOnSelect: false
+  });
+
+  $(".grp_edit").click(function(){
+  	$("#editGroup").modal("show");
+  });
+  
 </script>
 
