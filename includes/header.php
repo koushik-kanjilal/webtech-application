@@ -25,6 +25,7 @@ else{
 	<!-- javascript -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script src="assets/js/bootbox.min.js"></script>
     <script src="assets/js/digital_learner.js"></script>
   <script src="assets/js/jquery.jcrop.js"></script>
@@ -36,6 +37,7 @@ else{
   <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
   <link rel="stylesheet" media="screen and (min-width: 900px)" href="assets/css/style.css">
   <link rel="stylesheet" media="screen and (max-width: 899.9px) and (min-width: 400.1px)" href="assets/css/styleabove400below900.css">
   <link rel="stylesheet" media="screen and (max-width: 400px)" href="assets/css/stylebelow400.css">
@@ -43,6 +45,68 @@ else{
     <link rel="stylesheet" href="assets/css/jquery.Jcrop.css" type="text/css" />
 </head>
 <body>
+  <?php $usersReturnedQuery = mysqli_query($con, "SELECT * FROM reg_teach WHERE user_closed='no' AND `username` <> '".$userLoggedIn."'");
+$membrs=mysqli_fetch_all($usersReturnedQuery,MYSQLI_ASSOC); ?>
+
+<!-- Modal -->
+<div class="modal fade" id="createGroup" tabindex="-1" role="dialog" aria-labelledby="postGroupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="postGroupModalLabel">Create New Group</h4>
+      </div>
+
+      <div class="modal-body">
+        <form class="profile_post" action="includes/form_handlers/groups.php" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="grp_name">Group Name</label>
+            <input type="text" class="form-control " id="grp_name" name="grp_name" required="required">
+          </div>
+           <div class="form-group">
+            <label for="grp_info">Group Info</label>
+            <input type="text" class="form-control" id="grp_info" name="grp_info" required="required">
+          </div>
+          <div class="form-group">
+            <label for="grp_image">Image:</label>
+            <input type="file" id="grp_image" name="grp_image" required="required">
+          </div>
+          <!-- <div class="form-group">
+            <label for="grp_members">Members:</label>
+            <input type="text" onkeyup="getSearchGrpUsers(this.value, '<?php echo $userLoggedIn; ?>')" class="form-control" id="select_grp_members" name="select_grp_members">
+            <input type="hidden" name="grp_members" id="grp_members" value="">
+          </div>
+          <div class="form-group">            
+            <label id="selectedMemebrs" style="display: none;"></label>
+          </div>
+
+          <div class="search_results_grp_members">
+          </div> -->
+
+          <div class="form-group">
+            <label for="grp_members">Members:</label>
+            <!-- <input type="text" onkeyup="getSearchGrpUsers(this.value, '<?php echo $userLoggedIn; ?>')" class="form-control" id="select_grp_members" name="select_grp_members">
+            <input type="hidden" name="grp_members" id="grp_members" value=""> -->
+            <select class="select2" width="100%" multiple="" name="grp_members[]" style="width: 100%">
+              <option>Select</option>
+              <?php foreach ($usersReturnedQuery as $key => $value) { ?>
+                <option value="<?php echo $value['username']; ?>"><?php echo $value['first_name']." ".$value['last_name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+
+          <button type="submit" name="create_group" id="create_group" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<div class="top_bar">
 		
        <div class="logo">

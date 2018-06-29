@@ -59,6 +59,7 @@ if(isset($_POST['post'])){
 
 
  ?>
+ 
 		<div class="user_details">
 			<a href=" <?php echo $userLoggedIn; ?> "> <img src="<?php echo $user['profile_pic']; ?>">  </a>
 
@@ -117,55 +118,8 @@ if(isset($_POST['post'])){
        </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="createGroup" tabindex="-1" role="dialog" aria-labelledby="postGroupModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="postGroupModalLabel">Create New Group</h4>
-      </div>
-
-      <div class="modal-body">
-        <form class="profile_post" action="includes/form_handlers/groups.php" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="grp_name">Group Name</label>
-            <input type="text" class="form-control" id="grp_name" name="grp_name" required="required">
-          </div>
-           <div class="form-group">
-            <label for="grp_info">Group Info</label>
-            <input type="text" class="form-control" id="grp_info" name="grp_info" required="required">
-          </div>
-          <div class="form-group">
-            <label for="grp_image">Image:</label>
-            <input type="file" id="grp_image" name="grp_image" required="required">
-          </div>
-          <div class="form-group">
-            <label for="grp_members">Members:</label>
-            <input type="text" onkeyup="getSearchGrpUsers(this.value, '<?php echo $userLoggedIn; ?>')" class="form-control" id="select_grp_members" name="select_grp_members">
-            <input type="hidden" name="grp_members" id="grp_members" value="">
-          </div>
-          <div class="form-group">            
-            <label id="selectedMemebrs" style="display: none;"></label>
-          </div>
-
-          <div class="search_results_grp_members">
-          </div>
-
-          <button type="submit" name="create_group" id="create_group" class="btn btn-default">Submit</button>
-        </form>
-      </div>
-
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+  
   	<script>
    $(function(){
  
@@ -238,6 +192,11 @@ if(isset($_POST['post'])){
 
       });
   }
+
+  $('.select2').select2({
+    placeholder: "Select Members",
+    allowClear: true
+  });
 
   
  
