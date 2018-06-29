@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 //require $_SERVER['DOCUMENT_ROOT'].'/Digital_learner/config/config_regteach.php';
 include("../../config/config_regteach.php");
 

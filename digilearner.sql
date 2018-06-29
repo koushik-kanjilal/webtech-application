@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 24, 2018 at 07:29 PM
+-- Generation Time: Jun 29, 2018 at 06:10 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -41,7 +41,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `post_body`, `posted_by`, `posted_to`, `date_added`, `removed`, `post_id`) VALUES
-(69, 'scssf', 'abhishek_nair', 'abhishek_nair', '2018-06-21 00:37:54', 'no', 172);
+(69, 'scssf', 'abhishek_nair', 'abhishek_nair', '2018-06-21 00:37:54', 'no', 172),
+(70, 'ok', 'koushik_kanjilal', '', '2018-06-28 23:39:12', 'no', 1),
+(71, ':)', 'koushik_kanjilal', '', '2018-06-28 23:40:07', 'no', 2);
 
 -- --------------------------------------------------------
 
@@ -76,7 +78,10 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `grp_name`, `grp_info`, `picture`, `created_by`, `status`, `created_at`) VALUES
-(1, 'ksk', 'test', 'assets/images/group_cover_photos/5b2e8f3ea003a4fc598f2c9f2c0cdc5e0decc188d8d10_ft_xl.jpg', 'koushik_kanjilal', 1, '0000-00-00');
+(1, 'ksk', 'test', 'assets/images/group_cover_photos/5b2e8f3ea003a4fc598f2c9f2c0cdc5e0decc188d8d10_ft_xl.jpg', 'subrata_roy', 1, '0000-00-00'),
+(2, 'ksk_test', 'test', 'assets/images/group_cover_photos/5b2e8f3ea003a4fc598f2c9f2c0cdc5e0decc188d8d10_ft_xl.jpg', 'subrata_roy', 1, '2018-06-15'),
+(5, 'test_group', 'dfgiundiuhfv', 'assets/images/group_cover_photos/5b3142573e45fScreenshot from 2018-03-25 23-44-21.png', 'subrata_roy', 1, '2018-06-26'),
+(6, 'new test', 'test', 'assets/images/group_cover_photos/5b365934847d04fc598f2c9f2c0cdc5e0decc188d8d10_ft_xl.jpg', 'koushik_kanjilal', 1, '2018-06-29');
 
 -- --------------------------------------------------------
 
@@ -97,7 +102,40 @@ CREATE TABLE `group_members` (
 
 INSERT INTO `group_members` (`id`, `group_id`, `user_name`, `added_on`) VALUES
 (1, 1, 'abhishek_nair', '0000-00-00 00:00:00'),
-(2, 1, 'abhishek_krishna_1', '0000-00-00 00:00:00');
+(2, 1, 'koushik_kanjilal', '0000-00-00 00:00:00'),
+(3, 5, 'abhishek_krishna', '2018-06-26 00:58:23'),
+(4, 5, 'koushik_kanjilal', '2018-06-26 00:58:23'),
+(5, 5, 'subrata_roy', '2018-06-26 00:58:23'),
+(9, 6, 'digital_qqq_1', '2018-06-29 21:38:01'),
+(10, 6, 'abhishek_nair_1_2', '2018-06-29 21:38:01'),
+(11, 6, 'koushik_kanjilal', '2018-06-29 21:38:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grp_posts`
+--
+
+CREATE TABLE `grp_posts` (
+  `id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `body` text NOT NULL,
+  `added_by` varchar(60) NOT NULL,
+  `user_to` varchar(60) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `user_closed` varchar(3) NOT NULL,
+  `deleted` varchar(3) NOT NULL,
+  `likes` int(11) NOT NULL,
+  `image` varchar(500) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `grp_posts`
+--
+
+INSERT INTO `grp_posts` (`id`, `group_id`, `body`, `added_by`, `user_to`, `date_added`, `user_closed`, `deleted`, `likes`, `image`) VALUES
+(1, 5, 'jhkuyf', 'subrata_roy', 'none', '2018-06-27 02:49:42', 'no', 'no', 0, 'assets/images/posts/5b32adeeb8b45IMG_20180508_222528.jpg'),
+(2, 1, 'hello', 'koushik_kanjilal', 'none', '2018-06-28 23:39:57', 'no', 'no', 0, '');
 
 -- --------------------------------------------------------
 
@@ -116,7 +154,9 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id`, `username`, `post_id`) VALUES
-(145, 'abhishek_nair', 172);
+(145, 'abhishek_nair', 172),
+(147, 'koushik_kanjilal', 177),
+(149, 'koushik_kanjilal', 1);
 
 -- --------------------------------------------------------
 
@@ -159,6 +199,19 @@ CREATE TABLE `notifications` (
   `viewed` varchar(3) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_to`, `user_from`, `message`, `link`, `datetime`, `opened`, `viewed`) VALUES
+(84, '', 'koushik_kanjilal', 'Koushik Kanjilal commented on your post', 'post.php?id=1', '2018-06-28 23:39:12', 'no', 'no'),
+(85, '', 'koushik_kanjilal', 'Koushik Kanjilal commented on your profile post', 'post.php?id=1', '2018-06-28 23:39:12', 'no', 'no'),
+(86, '', 'koushik_kanjilal', 'Koushik Kanjilal commented on your post', 'post.php?id=2', '2018-06-28 23:40:07', 'no', 'no'),
+(87, '', 'koushik_kanjilal', 'Koushik Kanjilal commented on your profile post', 'post.php?id=2', '2018-06-28 23:40:07', 'no', 'no'),
+(88, 'subrata_roy', 'koushik_kanjilal', 'Koushik Kanjilal liked your post', 'post.php?id=177', '2018-06-29 00:02:07', 'no', 'no'),
+(89, '', 'koushik_kanjilal', 'Koushik Kanjilal liked your post', 'post.php?id=1', '2018-06-29 00:02:14', 'no', 'no'),
+(90, '', 'koushik_kanjilal', 'Koushik Kanjilal liked your post', 'post.php?id=1', '2018-06-29 00:02:21', 'no', 'no');
+
 -- --------------------------------------------------------
 
 --
@@ -184,7 +237,10 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` (`id`, `body`, `added_by`, `user_to`, `date_added`, `user_closed`, `deleted`, `likes`, `image`) VALUES
 (174, 'hello', 'abhishek_nair', 'none', '2018-06-21 13:20:13', 'no', 'no', 0, ''),
 (172, 'hai', 'abhishek_nair', 'none', '2018-06-21 00:37:40', 'no', 'no', 1, ''),
-(173, 'hello', 'abhishek_nair', 'none', '2018-06-21 11:46:36', 'no', 'no', 0, '');
+(173, 'hello', 'abhishek_nair', 'none', '2018-06-21 11:46:36', 'no', 'no', 0, ''),
+(175, 'hgdf', 'subrata_roy', 'none', '2018-06-28 00:37:06', 'no', 'yes', 0, 'assets/images/posts/5b33e05a42762IMG_20180508_222528.jpg'),
+(176, 'jkbcxr', 'subrata_roy', 'none', '2018-06-28 00:38:17', 'no', 'no', 0, 'assets/images/posts/5b33e0a150cf5IMG_20180508_222528.jpg'),
+(177, 'test', 'subrata_roy', 'none', '2018-06-28 00:41:43', 'no', 'no', 1, '');
 
 -- --------------------------------------------------------
 
@@ -231,7 +287,7 @@ INSERT INTO `reg_teach` (`id`, `first_name`, `last_name`, `username`, `email`, `
 (54, 'Digital', 'Qqq', 'digital_qqq_1_2_3_4', 'Aaaaaa@b.c', 'e10adc3949ba59abbe56e057f20f883e', '2018-06-21', 'assets/images/profile_pics/defaults/teacher.png', 0, '7025731901', 'Cusat', 'male', '2010-01-01', ',', 'no', 0, 'c0faf875b8596a0999b426631c0b5ff8', 'no'),
 (55, 'Abhishek', 'Nair', 'abhishek_nair_1_2', 'Qq@q.q', 'e807f1fcf82d132f9bb018ca6738a19f', '2018-06-21', 'assets/images/profile_pics/defaults/teacher.png', 91, '7025731901', 'Cusat', 'male', '2010-01-01', ',', 'no', 0, '9a5a511ca4f18a61719b12acf46f14c0', 'no'),
 (56, 'Koushik', 'Kanjilal', 'koushik_kanjilal', 'Kanjilalkoushik18@gmail.com', '1e9bc3587302f1704bb34c27b672e02d', '2018-06-23', 'assets/images/profile_pics/defaults/teacher.png', 91, '8583063630', 'Smu', 'male', '1991-11-17', ',subrata_roy,', 'no', 0, '5bcaed28930679b919fe66464b0c3693', 'no'),
-(57, 'Subrata', 'Roy', 'subrata_roy', 'Subrataroy@gmail.com', '78a8f834561c67fa660760d41a61dc62', '2018-06-23', 'assets/images/profile_pics/defaults/teacher.png', 91, '7896541230', 'Smu', 'male', '1990-10-18', ',koushik_kanjilal,', 'no', 0, 'af5ea63e84c19d4e1f0d2d1d3543f50c', 'no');
+(57, 'Subrata', 'Roy', 'subrata_roy', 'Subrataroy@gmail.com', '78a8f834561c67fa660760d41a61dc62', '2018-06-23', 'assets/images/profile_pics/defaults/teacher.png', 91, '7896541230', 'Smu', 'male', '1990-10-18', ',koushik_kanjilal,', 'no', 3, 'af5ea63e84c19d4e1f0d2d1d3543f50c', 'no');
 
 --
 -- Indexes for dumped tables
@@ -261,6 +317,12 @@ ALTER TABLE `groups`
 ALTER TABLE `group_members`
   ADD PRIMARY KEY (`id`),
   ADD KEY `group_id` (`group_id`);
+
+--
+-- Indexes for table `grp_posts`
+--
+ALTER TABLE `grp_posts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `likes`
@@ -300,7 +362,7 @@ ALTER TABLE `reg_teach`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT for table `friend_requests`
 --
@@ -310,17 +372,22 @@ ALTER TABLE `friend_requests`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `group_members`
 --
 ALTER TABLE `group_members`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `grp_posts`
+--
+ALTER TABLE `grp_posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 --
 -- AUTO_INCREMENT for table `messages`
 --
@@ -330,12 +397,12 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 --
 -- AUTO_INCREMENT for table `reg_teach`
 --
